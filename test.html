@@ -1,0 +1,35 @@
+<html>
+<head>
+    <title>Weather</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script>
+        $(document).ready(function() {
+           $('form').submit(function(){
+            var api_key = '6feeef893a92d57711229dd04f29f4d2';
+            var city = $('input:text[name=city]').val();
+            $.get('http://api.openweathermap.org/data/2.5/weather?q=' + city + '&units=imperial&appid=' + api_key, function(res){
+                var html_append = '';
+                html_append += "<p>" + res['name'] + ": " + res['weather'][0]['description'] + "</p>";
+                html_append += "<p>" + "Temperature Avg: " + res['main']['temp'] + " F</p>";
+                html_append += "<p>" + "High Temperature: " + res['main']['temp_max'] + " F</p>";
+                html_append += "<p>" + "Low Temperature: " + res['main']['temp_min'] + " F</p>";
+                html_append += "<p>" + "Humidity: " + res['main']['humidity'] + "%</p>";
+                $('#results').html(html_append);
+            });
+            return false;
+           })
+        });
+    </script>
+</head>
+<body>
+<div id="weather">
+    <form>
+        <label for='city'>City:
+            <input type='text' name='city' id='city'/>
+        </label>
+        <input type='submit' name='submit'/>
+    </form>
+    <div id="results"></div>
+</div>
+</body>
+</html>
